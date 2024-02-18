@@ -16,6 +16,10 @@
     border-radius: var(--callout-border-radii)!important;
 }
 
+.notion-quote .notion-text {
+    text-align: left!important;
+}
+
 .notion-quote p{
   font-family: var(--secondary-font)!important;
 }

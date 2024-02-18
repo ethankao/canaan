@@ -6,12 +6,12 @@
   const navbarConfig = {
     '關於我們': { value: 'About Us', linkPrefix: true },
     '聚會與敬拜': { value: 'Sermons', linkPrefix: true },
-    '教會事工': { value: 'Ministries', linkPrefix: true },
-    '台語事工': { value: 'Taiwanese Ministries' },
-    '英語事工': { value: 'English Ministries' },
-    '華語事工': { value: 'Mandarin Ministries' },
-    '青少事工': { value: 'Youth Ministries' },
-    '兒童事工': { value: 'Children\'s Ministries' },
+    '教會事工': { value: 'Ministries' },
+    '台語事工': { value: 'Taiwanese Ministry' },
+    '英語事工': { value: 'English Ministry' },
+    '華語事工': { value: 'Mandarin Ministry' },
+    '青少事工': { value: 'Youth Ministry' },
+    '兒童事工': { value: 'Children\'s Ministry' },
     '靈命成長': { value: 'Growth', linkPrefix: true },
     '團契生活': { value: 'Fellowships', linkPrefix: true },
     '新朋友專區': { value: 'Welcome', linkPrefix: true },
@@ -26,8 +26,7 @@
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", bootstrap);
-  }
-  else {
+  } else {
     bootstrap();
   }
 
@@ -43,6 +42,19 @@
       };
     })(window.history);
 
+    if (MutationObserver) {
+      const observer = new MutationObserver(() => {
+        updateNavbar()}
+      );
+      const navbar = document.getElementsByClassName('super-navbar balanced')[0];
+      if (navbar) {
+        observer.observe(navbar, {
+          subtree: true,
+          childList: true
+        })
+      }
+    }
+
     updateNavbar();
   }
 
@@ -55,13 +67,16 @@
     }
   }
 
-  /* global __NEXT_DATA__ */
   function toNavbar(configuration, addPrefix) {
     // loop through items and lists. (currently visible)
     const items = Array.from(document.getElementsByClassName('notion-link super-navbar__item'));
+    const headingItems = Array.from(document.getElementsByClassName('super-navbar__list-item-heading'));
+    // update side menu
+    const menuList = Array.from(document.getElementsByClassName('super-navbar__menu-list'));
+    const menuItems = menuList.flatMap((element) => Array.from(element.getElementsByTagName('span')));
     const lists = Array.from(document.getElementsByClassName('super-navbar__list'));
     const ctas = Array.from(document.getElementsByClassName('super-navbar__cta'));
-    items.concat(lists).concat(ctas).forEach((item) => {
+    items.concat(headingItems).concat(menuItems).concat(lists).concat(ctas).forEach((item) => {
       const config = configuration[item.innerText];
       if (!config) { return; }
 
@@ -73,24 +88,12 @@
       if (href && config.linkPrefix) {
         if (addPrefix) {
           item.setAttribute('href', '/en' + href);
+          // stop React to handle the action
+          item.addEventListener('click', (event) => {
+            event.stopImmediatePropagation();
+          }, true);
         } else if (href.startsWith('/en')) {
           item.setAttribute('href', href.replace(/^\/en/, ''));
-        }
-      }
-    });
-
-    const links = __NEXT_DATA__.props.pageProps.settings.navbar.links || [];
-    const allNestedLinks = links.flatMap((link) => link.list || []);
-    links.concat(allNestedLinks).forEach((link) => {
-      const config = configuration[link.label];
-      if (!config) { return; }
-
-      link.label = config.value;
-      if (link.link && config.linkPrefix) {
-        if (addPrefix) {
-          link.link = '/en' + link.link;
-        } else if (link.link.startsWith('/en/')) {
-          link.link = link.link.replace(/^\/en/, '');
         }
       }
     });

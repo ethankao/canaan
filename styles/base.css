@@ -56,6 +56,11 @@ h3 {
   opacity:75%!important;
 }
 
+
+.notion-text p {
+  line-height: 1.75em!important;
+}
+
 /*.notion-header__cover.no-cover {*/
 /*    min-height: 5em!important;*/
 /*}*/

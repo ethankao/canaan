@@ -1,7 +1,17 @@
-/*--------- Base Config ---------*/
-
 .super-navbar {
   background: #ffffff00;
+}
+
+.navbar {
+  max-width: var(--layout-max-width);
+  /*margin: 1em auto!important;*/
+  margin-left: auto;
+  margin-right: auto;
+  width: calc(100% - var(--column-spacing));
+  /*border-radius: var(--border-radii-layout)!important;*/
+  /*top: 1em!important;*/
+  /*height: 3.5em!important;*/
+
 }
 
 .notion-heading {
@@ -92,15 +102,29 @@ h3 {
     transition: 0.1s ease-in-out!important;
 }
 
+.super-navbar.balanced .super-navbar__content {
+  display: flex!important;
+}
+
 .super-navbar__content {
   padding-left: 1em!important;
 
   background: none!important;
+
 }
 
-.super-navbar__actions, .super-navbar__logo {
+.super-navbar.balanced .super-navbar__logo {
+  justify-content: flex-start;
+  -webkit-margin-end: 0!important;
+  margin-inline-end: 0!important;
   padding: 0!important;
 }
+
+.super-navbar.balanced .super-navbar__actions {
+  justify-content: flex-end;
+  padding: 0!important;
+}
+
 
 /*--------- footer ---------*/
 
@@ -182,7 +206,6 @@ h3 {
 
 .notion-page:hover {
   border-color: var(--color-ui-hover-bg)!important;
-
 }
 
 /*--------- CTA ---------*/
@@ -333,9 +356,6 @@ h3 {
 
 }
 
-
-
-
 .notion-text p {
   line-height: 1.75em!important;
 }
@@ -345,29 +365,47 @@ h3 {
 }
 
 .notion-collection-gallery.large {
-    grid-template-columns: 1fr!important;
+  display: flex!important;
+  grid-template-columns:none!important;
+}
+
+.notion-collection-gallery.large .notion-collection-card__property-list {
+  display: none!important;
 }
 
 .notion-collection-gallery.large .notion-collection-card {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    border: none !important;
-    box-shadow: none !important;
-    background: transparent;
+  max-width: 100%;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: none !important;
+  background: transparent!important;
+}
+
+.notion-collection-gallery.large .notion-collection-card img {
+  display: block;
+  height: 30em;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: var(--callout-border-radii)!important;
 }
 
 .notion-collection-gallery.large .notion-collection-card__cover {
-    flex: 2 !important;
+    /*flex: 2 !important;*/
+
 }
 
 .notion-collection-gallery.large .notion-collection-card__content {
-    flex: 1 !important;
-    padding-left: 2em !important;
-    transition: 0.2s ease-out!important;
+    /*flex: 1 !important;*/
+    /*padding-left: 2em !important;*/
+    /*transition: 0.2s ease-out!important;*/
 }
 
 @media (max-width: 880px) {
+  .notion-collection-gallery.large {
+    display: grid!important;
+  }
     .notion-collection-gallery.large .notion-collection-card {}
 
     .notion-collection-gallery.large .notion-collection-card__cover {}
@@ -376,9 +414,16 @@ h3 {
         position: absolute!important;
         bottom: 0em!important;
         width: 100%!important;
-        background: var(--color-card-bg);
+        /*background: var(--color-card-bg);*/
+        background: green;
         box-shadow: var(--collection-card-shadow)!important;
         transition: 0.2s ease-out!important;
+    }
+
+    .notion-collection-gallery.large .notion-collection-card img {
+      height: auto;
+      min-height: 10px;
+      width: 100%;
     }
 }
 
@@ -451,20 +496,20 @@ h3 {
 
 /* -- GALLERY DATABASE  -- */
 
-.notion-collection-card img{
-  transition: 1s ease-out!important;
-  transform: scale(1.1)!important;
-}
+/*.notion-collection-card img {*/
+/*  transition: 1s ease-out!important;*/
+/*  transform: scale(1.1)!important;*/
+/*}*/
 
-.notion-collection-card {
-  transition: 0.2s ease-out!important;
-}
+/*.notion-collection-card {*/
+/*  transition: 0.2s ease-out!important;*/
+/*}*/
 
-.notion-collection-card:hover img {
-  opacity: 0.88;
-  background: var(--color-card-bg-hover)!important;
-  transition: 0.2s ease-in!important;
-}
+/*.notion-collection-card:hover img {*/
+/*  opacity: 0.88;*/
+/*  background: var(--color-card-bg-hover)!important;*/
+/*  transition: 0.2s ease-in!important;*/
+/*}*/
 
 
 .notion-collection-card:hover .notion-collection-card__content {
@@ -715,7 +760,6 @@ h3 {
   .notion-dropdown__menu.animate-in.animate-out, .notion-dropdown__menu.animate-in, .notion-dropdown__menu.animate-out, .notion-dropdown__menu.initial-state {
     z-index: 1!important;
     opacity: 100!important;
-
   }
 
   .notion-dropdown__menu-header {
@@ -772,7 +816,15 @@ h3 {
 
 /*MOBILE*/
 
+@media (max-width:546px) {
+  .super-navbar__menu .super-navigation-menu__items{
+    padding: 2.5em 16px 16px!important;
+  }
+}
+
 @media (max-width: 880px) {
+
+
   .notion-collection-board {
     grid-template-columns: 1fr!important;
   }

@@ -274,6 +274,15 @@ ${end}
 `;
   }
 
+  function updateLanguageSwitcher(nav, isEn) {
+    Array.from(nav.getElementsByTagName('a'))
+      .filter((item) => item.innerText.trim() === 'English' || item.innerText.trim() === '中文')
+      .forEach((item) => {
+        const href = window.location.pathname;
+        updateLinkItem(item, href, item.getAttribute('href'), !isEn)
+      });
+  }
+
   function updateNavbar() {
     const nav = document.getElementsByTagName('nav')[0];
     if (!nav) { return; }
@@ -281,6 +290,7 @@ ${end}
     const isEn = window.location.hash === '#en' || window.location.pathname === '/en';
     const loc = isEn ? 'en' : 'zh';
     if (nav.classList.length > 0 && nav.getAttribute('loc') == loc) {
+      updateLanguageSwitcher(nav, isEn);
       return;
     }
 

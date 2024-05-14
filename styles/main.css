@@ -1,18 +1,3 @@
-.super-navbar {
-  background: #ffffff00;
-}
-
-.navbar {
-  max-width: var(--layout-max-width);
-  /*margin: 1em auto!important;*/
-  margin-left: auto;
-  margin-right: auto;
-  width: calc(100% - var(--column-spacing));
-  /*border-radius: var(--border-radii-layout)!important;*/
-  /*top: 1em!important;*/
-  /*height: 3.5em!important;*/
-
-}
 
 .notion-heading {
     line-height: 1.35em!important;

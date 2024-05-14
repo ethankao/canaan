@@ -1,7 +1,7 @@
 'use strict';
 
 (() => {
-  const logoUrl = 'https://www.test.com/';
+  const logoUrl = 'https://cdn.jsdelivr.net/gh/ethankao/canaan@main/static/logo.png';
   const navbarItems = [
     {
       en: 'About Us',
@@ -110,22 +110,49 @@
     entries.map(([key, value]) => [value, key])
   );
 
+  // DOM observation
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bootstrap);
+  } else {
+    bootstrap();
+  }
+
+  function bootstrap() {
+    window.addEventListener('popstate', updateNavbar);
+
+    (function(history) {
+      var _pushState = history.pushState;
+      history.pushState = function() {
+        const ret = _pushState.apply(history, arguments);
+        updateNavbar()
+        return ret;
+      };
+    })(window.history);
+
+    if (MutationObserver) {
+      const root = document.getElementsByClassName('super-root')[0];
+      if (root) {
+        const rootObserver = new MutationObserver(() => {
+          updateLinks();
+        });
+        rootObserver.observe(root, {
+          childList: true,
+          subtree: true
+        })
+      }
+    }
+
+    updateNavbar();
+  }
+
+  // Navbar HTML
+
   function itemLi(item) {
     if (item.url) {
       return `      <li><a href="${item.url}">${item.text}</a></li>`;
     }
     return `      <li><a>${item.text}</a></li>`;
-  }
-
-  function parentItem(item) {
-    const itemsTag = item.items.map(itemLi).join('\n  ');
-    return `
-      <li>
-        <a>${item.text}</a>
-        <ul class="p-2">
-  ${itemsTag}
-        </ul>
-      </li>`;
   }
 
   function detailItem(item) {
@@ -134,7 +161,7 @@
       <li>
       <details>
       <summary>${item.text}</summary>
-      <ul class="p-2 z-[2]">
+      <ul class="p-2 z-[2] lg:min-w-32 lg:max-2-80 lg:w-max">
   ${itemsTag}
       </ul>
       </details>
@@ -202,11 +229,11 @@ ${itemsTag}
     };
   }
 
-  function navbarStart(url) {
+  function navbarStart(url, logoUrl) {
     return `
   <div class="navbar-start" >
     <a href="${url}">
-    <img alt="Logo" width="96" height="40" decoding="async" data-nimg="1" style="color:transparent;object-fit:contain;object-position:left" src="https://cdn.jsdelivr.net/gh/ethankao/canaan@main/static/logo.png" />
+    <img alt="Logo" width="96" height="40" decoding="async" data-nimg="1" style="color:transparent;object-fit:contain;object-position:left" src="${logoUrl}" />
     </a>
   </div>`;
   }
@@ -237,7 +264,7 @@ ${dropdownTag}
     const url = isEn ? '/en' : '/';
     const configs = navbarItems.map((item) => itemConfig(isEn, item));
     const ctasConfig = ctas.map((item) => itemConfig(isEn, item));
-    const start = navbarStart(url);
+    const start = navbarStart(url, logoUrl);
     const center = navbarCenter(configs);
     const end = navbarEnd(ctasConfig, configs);
     return `
@@ -252,10 +279,72 @@ ${end}
     if (!nav) { return; }
 
     const isEn = window.location.hash === '#en' || window.location.pathname === '/en';
+    const loc = isEn ? 'en' : 'zh';
+    if (nav.classList.length > 0 && nav.getAttribute('loc') == loc) {
+      return;
+    }
+
+    nav.className = 'navbar bg-base-100 py-2';
+    nav.setAttribute('data-theme', 'light');
+    nav.setAttribute('loc', loc);
     const html = navbar(isEn);
     nav.innerHTML = html;
   }
 
-  updateNavbar();
+  // Update Page Links
 
+  function updateLinkItem(item, href, currentHref, toEnglish) {
+    if (!item || !href) {
+      return;
+    }
+
+    if (toEnglish) {
+      const path = toEnPaths[href];
+      if (path) {
+        item.setAttribute('href', path + '#en');
+      } else if (!href.endsWith('#en')) {
+        item.setAttribute('href', href + '#en');
+      } else if (href !== currentHref){
+        item.setAttribute('href', href);
+      }
+      item.addEventListener('click', (event) => {
+        event.stopImmediatePropagation();
+      }, true);
+    } else {
+      if (href.endsWith('#en')) {
+        href = href.replace(/#en$/, '');
+      }
+      const path = toZhPaths[href];
+      if (path) {
+        item.setAttribute('href', path);
+      } else if (href !== currentHref) {
+        item.setAttribute('href', href);
+      }
+    }
+  }
+
+
+  function updateLinks() {
+    const isEn = window.location.hash === '#en' || window.location.pathname === '/en';
+    updatePageLinks(isEn)
+  }
+
+  function updatePageLinks(isEn) {
+    // links in page content
+    const content = document.getElementsByTagName('main')[0];
+    const footer = document.getElementsByClassName('super-footer')[0];
+
+    const contentLinks = content ? Array.from(content.getElementsByTagName('a')) : [];
+    const footerLinks = footer ? Array.from(footer.getElementsByTagName('a')) : [];
+
+    contentLinks.concat(footerLinks)
+      .forEach((item) => {
+        const href = item.getAttribute('href');
+        if (!href || !href.startsWith('/')) {
+          return;
+        }
+
+        updateLinkItem(item, href, href, isEn);
+      });
+  }
 })();

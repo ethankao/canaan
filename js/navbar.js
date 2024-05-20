@@ -159,13 +159,14 @@
     const itemsTag = item.items.map(itemLi).join('\n  ');
     return `
       <li>
-      <details>
-      <summary>${item.text}</summary>
-      <ul class="p-2 z-[2] lg:min-w-32 lg:max-2-80 lg:w-max">
+      <div class="dropdown dropdown-bottom dropdown-hover">
+      <div tabindex="0">${item.text}</div>
+      <ul class="menu dropdown-content p-2 z-[12] shadow bg-base-100 rounded-box min-w-32 max-2-80 w-max">
   ${itemsTag}
       </ul>
-      </details>
-      </li>`;
+      </div>
+      </li>
+    `;
   }
 
   function navbarMenu(items) {
@@ -184,11 +185,24 @@
     </ul>`;
   }
 
+  function dropdownItem(item) {
+    const itemsTag = item.items.map(itemLi).join('\n  ');
+    return `
+     <li>
+     <details>
+     <summary>${item.text}</summary>
+     <ul class="p-2 z-[12] lg:min-w-32 lg:max-2-80 lg:w-max">
+  ${itemsTag}
+     </ul>
+     </details>
+     </li>`;
+  }
+
   function dropdown(items) {
     let itemsTag = items
       .map(item => {
         if (item.items) {
-          return detailItem(item);
+          return dropdownItem(item);
         }
         return itemLi(item);
       })
@@ -199,7 +213,7 @@
       <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
       </div>
-      <ul tabindex="0" class="dropdown-content z-[1] menu mt-3 p-2 shadow bg-base-100 rounded-box w-60">
+      <ul tabindex="0" class="dropdown-content z-[12] menu mt-3 p-2 shadow bg-base-100 rounded-box w-60">
 ${itemsTag}
       </ul>
     </div>`;

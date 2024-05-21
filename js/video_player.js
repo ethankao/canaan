@@ -2,6 +2,8 @@
 
 (() => {
 
+  const allowedPrefix = [ '/sermons', '/en/gatherings/sermons' ];
+
   // DOM observation
 
   if (document.readyState === "loading") {
@@ -47,14 +49,17 @@
   }
 
   function updatePlayer() {
+    const allowed = allowedPrefix.some((prefix) => window.location.pathname.startsWith(prefix));
+    if (!allowed) { return; }
+
     const targetClassName = 'notion-collection-card gallery';
     const cards = Array.from(document.getElementsByClassName(targetClassName));
 
     if (cards.length === 0) { return; }
 
-    cards.forEach((item) => {
-      const image = item.getElementsByTagName('img')[0];
-      const prop = item.getElementsByClassName('notion-property__url')[0]
+    cards.forEach((card) => {
+      const image = card.getElementsByTagName('img')[0];
+      const prop = card.getElementsByClassName('notion-property__url')[0]
 
       if (!image || !prop) { return; }
 
@@ -77,7 +82,7 @@
       iframe.setAttribute('frameborder', '0');
       iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
       iframe.setAttribute('allowfullscreen', '1');
-      iframe.className = image.className;
+      iframe.className = `${image.className} player`;
 
       image.replaceWith(iframe);
     })

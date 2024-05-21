@@ -488,8 +488,7 @@ h3 {
 }
 
 .notion-collection-list__item:hover {
-
-    transform: scale(1.01)!important;
+  transform: scale(1.01)!important;
 }
 
 .notion-collection-list__item .notion-property__title .notion-semantic-string > span {
@@ -678,7 +677,6 @@ h3 {
 /*R00T*/
 
 :root {
-  --collection-card-cover-height-medium: 320px!important;
   --heading3-size: calc(var(--heading-size) * 1)!important;
   --color-bg-blue: hsla( var(--blue-h), var(--blue-s), var(--blue-l), 0.1)!important;
   --color-bg-brown: hsla( var(--brown-h), var(--brown-s), var(--brown-l), 0.1)!important;

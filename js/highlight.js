@@ -2,6 +2,11 @@
 
 (() => {
 
+  const allowedPaths = {
+    '/': 1,
+    '/en': 1
+  }
+
   // DOM observation
 
   if (document.readyState === "loading") {
@@ -39,6 +44,8 @@
   }
 
   function updateGallery() {
+    if (!allowedPaths[window.location.pathname]) { return; }
+
     const targetClassName = 'notion-collection-gallery large';
     const gallery = Array.from(document.getElementsByClassName(targetClassName));
 

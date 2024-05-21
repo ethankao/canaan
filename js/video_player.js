@@ -2,7 +2,7 @@
 
 (() => {
 
-  const allowedPrefix = [ '/sermons', '/en/gatherings/sermons' ];
+  const allowedPrefix = [ '/sermons', '/en/gatherings/sermons', 'srcdoc' ];
 
   // DOM observation
 

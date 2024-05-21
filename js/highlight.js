@@ -4,7 +4,8 @@
 
   const allowedPaths = {
     '/': 1,
-    '/en': 1
+    '/en': 1,
+    'srcdoc': 1
   }
 
   // DOM observation

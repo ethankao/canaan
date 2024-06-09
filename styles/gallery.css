@@ -81,6 +81,7 @@
   margin-right: auto;
   box-shadow: none !important;
   background: transparent!important;
+  border: none !important;
 }
 
 .notion-collection-gallery.highlight .notion-collection-card img {

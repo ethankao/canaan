@@ -2,7 +2,12 @@
 
 (() => {
 
-  const allowedPrefix = [ '/sermons', '/en/gatherings/sermons', 'srcdoc' ];
+  const allowedPrefix = [
+    '/sermons',
+    '/en/gatherings/sermons',
+    '/growth/videos',
+    'srcdoc'
+];
 
   // DOM observation
 
@@ -42,6 +47,11 @@
       return href;
     }
     const url = new URL(href);
+
+    if (url.host === 'youtu.be') {
+      return `https://www.youtube.com/embed${url.pathname}`
+    }
+
     const v = url.searchParams.get('v');
     if (!v) { return null; }
 

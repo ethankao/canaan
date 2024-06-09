@@ -4,6 +4,10 @@
     align-self: center;
 }
 
+.notion-bulleted-list, .ul {
+  list-style: outside!important;
+}
+
 .notion-heading {
     line-height: 1.35em!important;
     letter-spacing: -0.02em!important;
@@ -669,17 +673,20 @@ h3 {
 
   :root {
     --heading1-size: calc(var(--heading-size) * 1.2)!important;
-    --heading2-size: calc(var(--heading-size) * 1.1)!important;
-    --heading3-size: calc(var(--heading-size) * 1)!important;
+    --heading2-size: calc(var(--heading-size) * 1)!important;
+    --heading3-size: calc(var(--heading-size) * 0.8)!important;
   }
 }
 
 /*R00T*/
 
 :root {
-  --heading3-size: calc(var(--heading-size) * 1)!important;
+  --heading1-size: calc(var(--heading-size) * 1.2)!important;
+  --heading2-size: calc(var(--heading-size) * 1)!important;
+  --heading3-size: calc(var(--heading-size) * 0.8)!important;
   --color-bg-blue: hsla( var(--blue-h), var(--blue-s), var(--blue-l), 0.1)!important;
   --color-bg-brown: hsla( var(--brown-h), var(--brown-s), var(--brown-l), 0.1)!important;
   --color-bg-gray: hsla( var(--gray-h), var(--gray-s), var(--gray-l), 0.1)!important;
+  --callout-border: 1.5px solid #E9E9E7;
 }
 

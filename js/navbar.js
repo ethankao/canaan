@@ -54,7 +54,18 @@
         {
           en: 'Children\'s Ministry',
           zh: '兒童事工',
-          enLink: '/ministries/childrens-ministry',
+          items: [
+            {
+              en: 'Home',
+              zh: '主頁',
+              enLink: '/ministries/childrens-ministry',
+            },
+            {
+              en: 'Sunday Programs',
+              zh: '主日崇拜',
+              enLink: '/ministries/childrens-ministry/sunday-programs',
+            }
+          ]
         },
         {
           en: 'Family Ministry',
@@ -68,8 +79,20 @@
       zh: '靈命成長',
       items: [
         {
-          en: 'Sunday Schoool',
-          zh: '主日學'
+          en: 'Sunday School',
+          zh: '主日學',
+          enLink: '/en/growth/sunday-school',
+          zhLink: '/growth/sunday-school'
+        },
+        {
+          en: 'Blog',
+          zh: '文章分享',
+          enLink: '/growth/blog'
+        },
+        {
+          en: 'Testimony (Video)',
+          zh: '見證分享 (影音)',
+          enLink: '/growth/videos'
         }
       ]
     },
@@ -149,13 +172,20 @@
   // Navbar HTML
 
   function itemLi(item) {
-    if (item.url) {
-      return `      <li><a href="${item.url}">${item.text}</a></li>`;
+    if (item.items) {
+      return detailsItem(item);
     }
-    return `      <li><a>${item.text}</a></li>`;
+
+    let content;
+    if (item.url) {
+      content = `<a href="${item.url}">${item.text}</a>`;
+    } else {
+      content = `<a>${item.text}</a>`;
+    }
+    return `      <li>${content}</li>`
   }
 
-  function detailItem(item) {
+  function dropdownItem(item) {
     const itemsTag = item.items.map(itemLi).join('\n  ');
     return `
       <li>
@@ -173,7 +203,7 @@
     let itemsTag = items
       .map(item => {
         if (item.items) {
-          return detailItem(item);
+          return dropdownItem(item);
         }
         return itemLi(item);
       })
@@ -185,7 +215,7 @@
     </ul>`;
   }
 
-  function dropdownItem(item) {
+  function detailsItem(item) {
     const itemsTag = item.items.map(itemLi).join('\n  ');
     return `
      <li>
@@ -202,7 +232,7 @@
     let itemsTag = items
       .map(item => {
         if (item.items) {
-          return dropdownItem(item);
+          return detailsItem(item);
         }
         return itemLi(item);
       })

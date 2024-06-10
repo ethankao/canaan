@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       spacing: {
-        smenu: 'calc(100vw - 12pt)'
+        smenu: 'calc(100vw - 2 * var(--column-spacing) + 10pt)'
       }
     },
   },

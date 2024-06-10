@@ -210,7 +210,7 @@
       .join('\n');
 
     return `
-    <ul class="menu menu-horizontal px-1">
+    <ul class="menu lg:menu-lg menu-horizontal px-1">
       ${itemsTag}
     </ul>`;
   }
@@ -240,7 +240,7 @@
 
     return `
     <div class="dropdown dropdown-bottom dropdown-end">
-      <div tabindex="0" role="button" class="btn btn-ghost md:hidden">
+      <div tabindex="0" role="button" class="btn btn-ghost lg:hidden md:hidden">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
       </div>
       <ul tabindex="0" class="dropdown-content z-[12] menu menu-lg mt-3 p-2 shadow bg-base-100 rounded-box w-smenu">
@@ -285,7 +285,7 @@ ${itemsTag}
   function navbarCenter(items) {
     const menu = navbarMenu(items);
     return `
-  <div class="navbar-center hidden md:flex">
+  <div class="navbar-center hidden lg:flex md:flex">
 ${menu}
   </div>`;
   }

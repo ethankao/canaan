@@ -649,6 +649,12 @@ h3 {
     font-size: 1em!important;
   }
 
+  .notion-dropdown__option.active {
+    color: var(--color-pill-text-gray)!important;
+    background: var(--color-pill-gray)!important;
+    border: 1px solid var(--color-pill-gray) !important;
+  }
+
   .notion-dropdown__option:hover  {
     color: var(--color-bg-default)!important;
     background: var(--color-text-default)!important;

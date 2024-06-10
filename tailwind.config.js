@@ -4,7 +4,11 @@ module.exports = {
     './js/**/*.js'
   ],
   theme: {
-    extend: {},
+    extend: {
+      spacing: {
+        smenu: 'calc(100vw - 12pt)'
+      }
+    },
   },
   plugins: [
     require("@tailwindcss/typography"),

@@ -508,6 +508,10 @@ html {
   -webkit-tap-highlight-color: transparent;
 }
 
+* {
+  scrollbar-color: currentColor transparent;
+}
+
 :root {
   color-scheme: light;
   --in: 72.06% 0.191 231.6;
@@ -1687,13 +1691,13 @@ html {
   width: 1.25rem;
 }
 
-.w-60 {
-  width: 15rem;
-}
-
 .w-max {
   width: -moz-max-content;
   width: max-content;
+}
+
+.w-screen {
+  width: 100vw;
 }
 
 .min-w-32 {
@@ -1751,21 +1755,21 @@ html {
   width: calc(100% - var(--column-spacing));
 }
 
-@media (min-width: 1024px) {
-  .lg\:flex {
+@media (min-width: 768px) {
+  .md\:flex {
     display: flex;
   }
 
-  .lg\:hidden {
+  .md\:hidden {
     display: none;
   }
 
-  .lg\:w-max {
+  .md\:w-max {
     width: -moz-max-content;
     width: max-content;
   }
 
-  .lg\:min-w-32 {
+  .md\:min-w-32 {
     min-width: 8rem;
   }
 }

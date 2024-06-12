@@ -40,6 +40,23 @@
           en: 'English Ministry',
           zh: '英語事工',
           enLink: '/ministries/english-ministry',
+          items: [
+            {
+              en: 'Home',
+              zh: '主頁',
+              enLink: '/ministries/english-ministry',
+            },
+            {
+              en: 'Announcements',
+              zh: '最新公告',
+              enLink: '/ministries/english-ministry/announcements',
+            },
+            {
+              en: 'Fellowships',
+              zh: '團契生活',
+              enLink: '/ministries/english-ministry/fellowships',
+            }
+          ]
         },
         {
           en: 'Mandarin Ministry',
@@ -64,6 +81,11 @@
               en: 'Sunday Programs',
               zh: '主日崇拜',
               enLink: '/ministries/childrens-ministry/sunday-programs',
+            },
+            {
+              en: 'Announcements',
+              zh: '最新公告',
+              enLink: '/ministries/childrens-ministry/announcements',
             }
           ]
         },

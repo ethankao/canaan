@@ -5,6 +5,8 @@
   const allowedPaths = {
     '/': 1,
     '/en': 1,
+    '/ministries/youth-ministry': 1,
+    '/ministries/mandarin-ministry': 1,
     'srcdoc': 1
   }
 

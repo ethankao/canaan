@@ -321,9 +321,10 @@ ${dropdownTag}
 
   function navbar(isEn) {
     //const isEn = window.location.hash === '#en' || window.location.pathname === '/en';
-    const url = isEn ? '/en' : '/';
     const configs = navbarItems.map((item) => itemConfig(isEn, item));
     const ctasConfig = ctas.map((item) => itemConfig(isEn, item));
+
+    const url = isEn ? '/en' : '/zh';
     const start = navbarStart(url, logoUrl);
     const center = navbarCenter(configs);
     const end = navbarEnd(ctasConfig, configs);

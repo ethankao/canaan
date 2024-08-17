@@ -3,7 +3,7 @@
 (() => {
 
   const allowedPaths = {
-    '/': 1,
+    '/zh': 1,
     '/en': 1,
     '/ministries/youth-ministry': 1,
     '/ministries/mandarin-ministry': 1,

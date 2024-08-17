@@ -35,11 +35,19 @@
           en: 'Taiwanese Ministry',
           zh: '台語事工',
           enLink: '/ministries/taiwanese-ministry',
+          enOrder: 1,
+        },
+        {
+          en: 'Mandarin Ministry',
+          zh: '華語事工',
+          enLink: '/ministries/mandarin-ministry',
+          enOrder: 2,
         },
         {
           en: 'English Ministry',
           zh: '英語事工',
           enLink: '/ministries/english-ministry',
+          enOrder: 0,
           items: [
             {
               en: 'Home',
@@ -54,14 +62,9 @@
             {
               en: 'Fellowships',
               zh: '團契生活',
-              enLink: '/ministries/english-ministry/fellowships',
+              enLink: '/en/fellowships/en',
             }
           ]
-        },
-        {
-          en: 'Mandarin Ministry',
-          zh: '華語事工',
-          enLink: '/ministries/mandarin-ministry',
         },
         {
           en: 'Youth Ministry',
@@ -123,8 +126,23 @@
       zh: '團契生活',
       items: [
         {
-          en: 'TBD',
-          zh: 'TBD'
+          en: 'Taiwanese Fellowships',
+          zh: '台語團契',
+          enLink: '/en/fellowships/tm',
+          zhLink: '/fellowships/tm',
+          enOrder: 1,
+        },
+        {
+          en: 'Mandarin Fellowships',
+          zh: '華語團契',
+          zhLink: '/fellowships/mm',
+          enOrder: 2,
+        },
+        {
+          en: 'English Fellowships',
+          zh: '英語團契',
+          enLink: '/en/fellowships/en',
+          enOrder: 0,
         }
       ]
     },
@@ -137,11 +155,24 @@
 
   const ctas = [];
 
+  const zhEnPathes = [
+    ['/zh', '/en'],
+    ['/fellowships/tm/cupertino', '/en/fellowships/tm/cupertino'],
+    ['/fellowships/tm/fremont', '/en/fellowships/tm/fremont'],
+    ['/fellowships/tm/mid-peninsula', '/en/fellowships/tm/mid-peninsula'],
+    ['/fellowships/tm/milpitas', '/en/fellowships/tm/milpitas'],
+    ['/fellowships/tm/palo-alto', '/en/fellowships/tm/palo-alto'],
+    ['/fellowships/tm/saratoga', '/en/fellowships/tm/saratoga'],
+    ['/fellowships/tm/living-springs', '/en/fellowships/tm/living-springs'],
+    ['/fellowships/tm/living-stones', '/en/fellowships/tm/living-stones'],
+    ['/fellowships/tm/tyfm', '/en/fellowships/tm/tyfm'],
+  ];
+
   const entries = navbarItems
     .concat(navbarItems.flatMap((item) => item.items || []))
     .filter((item) => item.zhLink != null && item.enLink != null)
     .map((item) => [ item.zhLink, item.enLink ])
-    .concat([[ '/', '/en']]);
+    .concat(zhEnPathes);
 
   const toEnPaths = Object.fromEntries(entries);
 
@@ -265,7 +296,7 @@ ${itemsTag}
     </div>`;
   }
 
-  function itemConfig(isEn, item) {
+  function itemConfig(isEn, item, index) {
     let url, addHash = isEn;
     if (item.language) {
       addHash = !isEn;
@@ -280,12 +311,19 @@ ${itemsTag}
     }
 
     const items = item.items ?
-      item.items.map((i) => itemConfig(isEn, i))
+      item.items.map((i, index) => itemConfig(isEn, i, index))
       : undefined;
+
+    let sortedItems;
+    if (isEn && items) {
+      sortedItems = items.sort((a, b) => { return a.enOrder - b.enOrder; })
+    }
+    const enOrder = item.enOrder !== undefined ? item.enOrder : index;
     return {
       text: isEn ? item.en : item.zh,
       url: url,
-      items: items
+      items: sortedItems || items,
+      enOrder: enOrder
     };
   }
 

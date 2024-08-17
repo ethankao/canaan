@@ -39,6 +39,12 @@
       return href;
     }
     const url = new URL(href);
+    if (url.pathname) {
+      const paths = url.pathname.split('/');
+      if (paths.length > 2) {
+        return `https://player.vimeo.com/video/${paths[1]}?h=${paths[2]}`;
+      }
+    }
     return `https://player.vimeo.com/video${url.pathname}`;
   }
 

@@ -22,6 +22,14 @@ function paragraphBlock(text) {
   } };
 }
 
+function selectBlock(selection) {
+  if (!selection || selection.trim() === '') {
+    return null;
+  }
+
+  return { select: { name: selection} };
+}
+
 function multiSelect(selections) {
   if (!selections || selections.length == 0) {
     return null;
@@ -83,12 +91,19 @@ function createVerseString(verses) {
     .join(', ')
 }
 
+function videoPlayerBlock(videoLink) {
+  if (/vimeo/i.test(videoLink)) {
+    return { embed: { url: vimeoLink(videoLink) } };
+  } else if (/youtu/i.test(videoLink)) {
+    return { video: { external: { url: youtubeLink(videoLink)} } };
+  }
+}
+
 function leftColumnBlocks(videoLink, audioLink) {
   const blocks = [];
-  if (/vimeo/i.test(videoLink)) {
-    blocks.push({ embed: { url: vimeoLink(videoLink) } });
-  } else if (/youtu/i.test(videoLink)) {
-    blocks.push({ video: { external: { url: youtubeLink(videoLink)} } });
+  const videoBlock = videoPlayerBlock(videoLink);
+  if (videoBlock) {
+    blocks.push(videoBlock);
   }
 
   if (audioLink) {
@@ -132,11 +147,13 @@ export {
   heading2Block,
   heading3Block,
   paragraphBlock,
+  selectBlock,
   multiSelect,
   columnList,
   leftColumnBlocks,
   rightColumnBlocks,
   vimeoLink,
   youtubeLink,
+  videoPlayerBlock,
   createVerseString,
 };

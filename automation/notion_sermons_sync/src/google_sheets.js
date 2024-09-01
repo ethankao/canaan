@@ -101,13 +101,15 @@ async function fetchSheetRecords(auth, spreadsheetId, tab) {
     .filter(n => n.topic && n.ministry && n.videoLink && n.imported !== '1');
 }
 
-async function markRecordIsImported(auth, spreadsheetId, tab, index) {
+async function markRecordIsImported(auth, spreadsheetId, tab, index, lastCol) {
   const sheets = google.sheets({ version: 'v4', auth });
   const resource = { values: [ [1] ] };
 
+  const lastPos = `${lastCol || LAST_COL}${index}`;
+  const range = `${tab}!${lastPos}:${lastPos}`;
   const params = {
     spreadsheetId,
-    range: `${tab}!${LAST_COL}${index}:${LAST_COL}${index}`,
+    range,
     valueInputOption: 'USER_ENTERED',
     resource
   };

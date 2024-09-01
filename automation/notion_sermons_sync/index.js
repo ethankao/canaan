@@ -1,0 +1,28 @@
+import gWorker from './src/google_sheets.js';
+import nWorker from './src/notion.js';
+
+const sermonsSheet = '1wS5R_yxItbRPVkO2BL0vOwxAq1T9PXnIzOikJTJGvmU';
+
+(async () => {
+  try {
+    const auth = await gWorker.authorize();
+    const records = await gWorker.fetchSheetRecords(auth, sermonsSheet, '2024');
+    console.log(records);
+
+    if (records.length == 0) { return; }
+
+    const notion = await nWorker.createNotionClient();
+    records.forEach(async (r) => {
+      try {
+        console.log(`Importing: ${JSON.stringify(r)}`);
+        await nWorker.createSermonRecord(notion, r, false);
+        await gWorker.markRecordIsImported(auth, sermonsSheet, '2024', r.rowIndex);
+        console.log(`Importing: ${r.rowIndex} done.`);
+      } catch(error) {
+        console.error(`Fail to create record: ${error}`);
+      }
+    })
+  } catch(error) {
+    console.error(error);
+  }
+})();

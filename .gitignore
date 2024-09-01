@@ -122,6 +122,11 @@ dist
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
+# Keys
+credentials.json
+token.json
+notion_token.json
+
 # yarn v2
 .yarn/cache
 .yarn/unplugged

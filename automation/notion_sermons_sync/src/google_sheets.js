@@ -7,6 +7,7 @@ import { filePath, readFileAsJson, writeJsonToFile } from './fs_utils.js';
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 const TOKEN_FILE = 'token.json';
 const CREDENTIALS_FILE = 'credentials.json';
+const LAST_COL = 'J';
 
 /**
  * Reads previously authorized credentials from the save file.
@@ -85,7 +86,7 @@ async function fetchSheetRecords(auth, spreadsheetId, tab) {
   const sheets = google.sheets({ version: 'v4', auth });
   const res = await sheets.spreadsheets.values.get({
     spreadsheetId,
-    range: `${tab}!A1:I` // skip header
+    range: `${tab}!A1:${LAST_COL}` // skip header
   });
   const rows = res.data.values;
   if (!rows || rows.length === 0) {
@@ -97,7 +98,7 @@ async function fetchSheetRecords(auth, spreadsheetId, tab) {
   return rows
     .map((row, index) => { return rowToRecord(row, index, valueMap) })
     .filter(n => n)
-    .filter(n => n.topic && n.ministry && n.videoLink && n.audioLink && !n.imported);
+    .filter(n => n.topic && n.ministry && n.videoLink && n.imported !== '1');
 }
 
 async function markRecordIsImported(auth, spreadsheetId, tab, index) {
@@ -106,7 +107,7 @@ async function markRecordIsImported(auth, spreadsheetId, tab, index) {
 
   const params = {
     spreadsheetId,
-    range: `${tab}!I${index}:I${index}`,
+    range: `${tab}!${LAST_COL}${index}:${LAST_COL}${index}`,
     valueInputOption: 'USER_ENTERED',
     resource
   };
@@ -125,6 +126,9 @@ function rowToRecord(row, index, valueMap) {
     ...Object.fromEntries(row.map((value, index) => {
       const key = [valueMap[index]];
       if (arrayKeys[key]) {
+        if (!value) {
+          return [];
+        }
         return [key, value.split(',').map(n => n.trim())];
       }
       return [key, value.trim()];

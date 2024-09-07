@@ -16,7 +16,7 @@ import {
 
 // const SERMON_DATABASE_ID = '5b3cd3c02a3b4b34890c19ce0a1492ce'; // real
 const SERMON_DATABASE_ID = '223d59a574244c0b991871c3351bb714'; // test
-// const VIDEO_DATABASE_ID = '63eea55df8614ab99109f62085f350a2'; // real
+// const VIDEO_DATABASE_ID = '63709361257a479390bbc45b96cea5f0'; // real
 const VIDEO_DATABASE_ID = '15b72557477e4c8c85de1b8566c89770'; // test
 
 const ministryMap = {
@@ -61,7 +61,7 @@ async function createVideoTestimonyRecord(notion, record, highlight) {
 
   const pageBody = {
     parent: { database_id: VIDEO_DATABASE_ID },
-    conver: { external: { url: 'https://www.notion.so/images/page-cover/gradients_8.png' } },
+    cover: { external: { url: 'https://www.notion.so/images/page-cover/gradients_8.png' } },
     icon: null,
     properties: Object.fromEntries(propEntries),
     children
@@ -96,7 +96,7 @@ async function createSermonRecord(notion, record, highlight) {
 
   const pageBody = {
     parent: { database_id: SERMON_DATABASE_ID },
-    conver: { external: { url: 'https://www.notion.so/images/page-cover/gradients_8.png' } },
+    cover: { external: { url: 'https://www.notion.so/images/page-cover/gradients_8.png' } },
     icon: null,
     properties: Object.fromEntries(propEntries),
     children

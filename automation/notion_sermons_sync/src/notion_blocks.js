@@ -97,6 +97,7 @@ function videoPlayerBlock(videoLink) {
   } else if (/youtu/i.test(videoLink)) {
     return { video: { external: { url: youtubeLink(videoLink)} } };
   }
+  return { embed: { url: videoLink } };
 }
 
 function leftColumnBlocks(videoLink, audioLink) {
@@ -108,7 +109,7 @@ function leftColumnBlocks(videoLink, audioLink) {
 
   if (audioLink) {
     let url = audioLink;
-    if (audioLink.endsWith('/view')) {
+    if (audioLink.includes('/view')) {
       url = audioLink.replace('/view', '/preview')
     }
     blocks.push(heading3Block('Audio'), {

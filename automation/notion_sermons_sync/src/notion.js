@@ -14,8 +14,8 @@ import {
   videoPlayerBlock,
 } from './notion_blocks.js'
 
-// const SERMON_DATABASE_ID = '5b3cd3c02a3b4b34890c19ce0a1492ce'; // real
-const SERMON_DATABASE_ID = '223d59a574244c0b991871c3351bb714'; // test
+const SERMON_DATABASE_ID = '5b3cd3c02a3b4b34890c19ce0a1492ce'; // real
+// const SERMON_DATABASE_ID = '223d59a574244c0b991871c3351bb714'; // test
 // const VIDEO_DATABASE_ID = '63709361257a479390bbc45b96cea5f0'; // real
 const VIDEO_DATABASE_ID = '15b72557477e4c8c85de1b8566c89770'; // test
 
@@ -105,6 +105,7 @@ async function createSermonRecord(notion, record, highlight) {
   console.log(`Sermon Page Payload: ${JSON.stringify(pageBody)}`);
   const res = await notion.pages.create(pageBody);
   console.log(`Sermon Page Created ${res.id}`);
+  return res.id;
 }
 
 export default { createNotionClient, createVideoTestimonyRecord, createSermonRecord };

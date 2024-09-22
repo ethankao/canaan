@@ -51,8 +51,8 @@ function sleep(ms) {
     for (const r of records) {
       try {
         console.log(`Importing Sermon: ${JSON.stringify(r)}`);
-        await nWorker.createSermonRecord(notion, r, false);
-        await gWorker.markRecordIsImported(auth, sermonsSheet, tabName, r.rowIndex, importedField);
+        const pageId = await nWorker.createSermonRecord(notion, r, false);
+        await gWorker.markRecordIsImported(auth, sermonsSheet, tabName, r.rowIndex, importedField, pageId);
         console.log(`Importing: ${r.rowIndex} done.\n`);
         await sleep(350); // avoid rate limits
       } catch(error) {

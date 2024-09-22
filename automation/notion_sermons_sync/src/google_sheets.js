@@ -98,12 +98,13 @@ async function fetchSheetRecords(auth, spreadsheetId, tab) {
   return rows
     .map((row, index) => { return rowToRecord(row, index, valueMap) })
     .filter(n => n)
-    .filter(n => n.topic && n.ministry && n.videoLink && n.imported !== '1');
+    .filter(n => n.topic && n.ministry && n.videoLink && !n.imported);
 }
 
-async function markRecordIsImported(auth, spreadsheetId, tab, index, lastCol) {
+async function markRecordIsImported(auth, spreadsheetId, tab, index, lastCol, pageId) {
   const sheets = google.sheets({ version: 'v4', auth });
-  const resource = { values: [ [1] ] };
+  const values = [ [ pageId || 1 ] ];
+  const resource = { values };
 
   const lastPos = `${lastCol || LAST_COL}${index}`;
   const range = `${tab}!${lastPos}:${lastPos}`;

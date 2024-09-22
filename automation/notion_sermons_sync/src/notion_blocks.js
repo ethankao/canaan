@@ -56,15 +56,22 @@ function vimeoLink(href) {
 }
 
 function youtubeLink(href) {
-    if (/watch/.test(href)) { return href; }
-
-    const url = new URL(href);
-    if (url.host === 'youtu.be') {
-      return `https://www.youtube.com/watch?v=${url.pathname.replace('/', '')}`
-    }
-
+  const url = new URL(href);
+  var videoId;
+  if (/watch/.test(href)) {
+    videoId = url.searchParams.get('v') || url.searchParams.get('V');
+  } else if (url.host === 'youtu.be') {
+    videoId = url.pathname.replace('/', '');
+  } else {
     return href;
   }
+
+  if (videoId) {
+    return `https://www.youtube.com/embed/${videoId}`;
+  }
+
+  return href;
+}
 
 function createVerseString(verses) {
   if (!verses || verses.length == 0) {
@@ -95,7 +102,13 @@ function videoPlayerBlock(videoLink) {
   if (/vimeo/i.test(videoLink)) {
     return { embed: { url: vimeoLink(videoLink) } };
   } else if (/youtu/i.test(videoLink)) {
-    return { video: { external: { url: youtubeLink(videoLink)} } };
+    const link = youtubeLink(videoLink);
+    const text = `super-embed:\n<iframe width="100%" style="aspect-ratio:16/9;border-radius:var(--callout-border-radii)" src="${link}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+
+    return { code: {
+      rich_text: textType(text),
+      language: 'javascript'
+    } };
   }
   return { embed: { url: videoLink } };
 }
@@ -112,9 +125,13 @@ function leftColumnBlocks(videoLink, audioLink) {
     if (audioLink.includes('/view')) {
       url = audioLink.replace('/view', '/preview')
     }
-    blocks.push(heading3Block('Audio'), {
-      embed: { url }
-    })
+
+    const text = `super-embed:\n<iframe width="100%" height="100%" style="aspect-ratio:2/1;border-radius:var(--callout-border-radii)" src="${url}" allow="autoplay"></iframe>`;
+    const audioBlock = { code: {
+      rich_text: textType(text),
+      language: 'javascript'
+    } };
+    blocks.push(heading3Block('Audio'), audioBlock);
   }
   return blocks;
 }

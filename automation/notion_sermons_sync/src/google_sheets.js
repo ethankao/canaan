@@ -69,6 +69,25 @@ const arrayKeys = {
   verses: 1
 };
 
+async function fetchSundaySchoolSheetRecords(auth, spreadsheetId, tab) {
+  const sheets = google.sheets({ version: 'v4', auth });
+  const res = await sheets.spreadsheets.values.get({
+    spreadsheetId,
+    range: `${tab}!A1:${LAST_COL}` // skip header
+  });
+  const rows = res.data.values;
+  if (!rows || rows.length === 0) {
+    console.log(`No data found in ${tab}.`);
+    throw new Error(`No data found in ${tab}`);
+  }
+
+  const valueMap = createHeaderMap(rows.shift());
+  return rows
+    .map((row, index) => { return rowToRecord(row, index, valueMap) })
+    .filter(n => n)
+    .filter(n => n.title && !n.imported);
+}
+
 // Example record:
 // {
 //    date: '8/18/2024',
@@ -152,4 +171,9 @@ function createHeaderMap(headerRow) {
   return Object.fromEntries(headerRow.map((value, index) => [index, toCamelCase(value)]));
 }
 
-export default { authorize, fetchSheetRecords, markRecordIsImported }
+export default {
+  authorize,
+  fetchSheetRecords,
+  fetchSundaySchoolSheetRecords,
+  markRecordIsImported
+}

@@ -1,5 +1,11 @@
-function textType(text) {
-  return [ { text: { content: text } } ];
+function textType(text, url) {
+  const textBlock = {
+    text: { content: text }
+  };
+  if (url) {
+    textBlock.text.link = { url };
+  }
+  return [ textBlock ];
 }
 
 function titleBlock(text) {
@@ -39,6 +45,16 @@ function multiSelect(selections) {
     return { name: n };
   });
   return { multi_select };
+}
+
+function linkText(text, url) {
+  if (!url) {
+    return null;
+  }
+
+  return {
+    rich_text: textType(text, url)
+  };
 }
 
 function vimeoLink(href) {
@@ -169,6 +185,7 @@ export {
   multiSelect,
   columnList,
   leftColumnBlocks,
+  linkText,
   rightColumnBlocks,
   vimeoLink,
   youtubeLink,

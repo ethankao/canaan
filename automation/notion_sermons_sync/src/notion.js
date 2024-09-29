@@ -9,6 +9,7 @@ import {
   multiSelect,
   columnList,
   leftColumnBlocks,
+  linkText,
   rightColumnBlocks,
   heading2Block,
   videoPlayerBlock,
@@ -108,4 +109,30 @@ async function createSermonRecord(notion, record, highlight) {
   return res.id;
 }
 
-export default { createNotionClient, createVideoTestimonyRecord, createSermonRecord };
+async function createSundaySchoolRecord(notion, database_id, record, isEnglish) {
+  const handoutText = isEnglish ? '📄 Handout' : '📄 講義';
+  const recordingText = isEnglish ? '▶️  Recording' : '▶️  錄音';
+  const propEntries = [
+    [ 'Date', { date: { start: record.date } } ],
+    [ 'Title', titleBlock(record.title) ],
+    [ 'Speakers', multiSelect(record.speakers) ],
+    [ 'Handout', linkText(handoutText, record.handoutLink) ],
+    [ 'Recording', linkText(recordingText, record.audioLink) ],
+    [ 'Verses', multiSelect(record.verses) ],
+    [ 'Tags', multiSelect(record.tags) ],
+  ].filter(n => !!n[1]);
+
+  const pageBody = {
+    parent: { database_id },
+    cover: null,
+    icon: null,
+    properties: Object.fromEntries(propEntries)
+  };
+
+  console.log(`Lesson Payload: ${JSON.stringify(pageBody)}`);
+  const res = await notion.pages.create(pageBody);
+  console.log(`Lesson Created ${res.id}`);
+  return res.id;
+}
+
+export default { createNotionClient, createVideoTestimonyRecord, createSermonRecord, createSundaySchoolRecord };

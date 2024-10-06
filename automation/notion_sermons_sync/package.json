@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@google-cloud/functions-framework": "^3.4.2",
     "@google-cloud/local-auth": "^3.0.1",
     "@notionhq/client": "^2.2.15",
     "googleapis": "^143.0.0"
@@ -15,7 +16,9 @@
     "globals": "^15.9.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test sermons": "npx @google-cloud/functions-framework --target=syncSermons",
+    "deploy sermons": "gcloud functions deploy sermons_sync --gen2 --runtime=nodejs20 --region=us-west1 --source=.  --entry-point=syncSermons --trigger-http"
   },
   "author": "",
   "license": "ISC"

@@ -1,30 +1,58 @@
-function textType(text, url) {
+function textType(text, options = {}) {
+  const { url, color, bold } = options;
+
   const textBlock = {
     text: { content: text }
   };
   if (url) {
     textBlock.text.link = { url };
   }
+
+  if (color) {
+    textBlock.annotations = {
+      bold: bold || false,
+      color
+    };
+  }
   return [ textBlock ];
 }
 
-function titleBlock(text) {
-  return { title: textType(text) };
+function titleBlock(text, options) {
+  return { title: textType(text, options) };
 }
 
-function heading2Block(text) {
-  return {  heading_2: { rich_text: textType(text) } };
+function richText(text, options) {
+  if (!text) {
+    return;
+  }
+  return { rich_text: textType(text, options) };
 }
 
-function heading3Block(text) {
-  return {  heading_3: { rich_text: textType(text) } };
+function linkText(text, url) {
+  if (!url) {
+    return null;
+  }
+
+  return {
+    rich_text: textType(text, { url })
+  };
 }
 
-function paragraphBlock(text) {
+function heading2Block(text, options) {
+  return {  heading_2: { rich_text: textType(text, options) } };
+}
+
+/// options. url, color, bold
+function heading3Block(text, options) {
+  return {  heading_3: { rich_text: textType(text, options) } };
+}
+
+/// options. url, color, bold
+function paragraphBlock(text, options) {
   if (!text) { return null };
 
   return { paragraph: {
-    rich_text: textType(text)
+    rich_text: textType(text, options)
   } };
 }
 
@@ -45,16 +73,6 @@ function multiSelect(selections) {
     return { name: n };
   });
   return { multi_select };
-}
-
-function linkText(text, url) {
-  if (!url) {
-    return null;
-  }
-
-  return {
-    rich_text: textType(text, url)
-  };
 }
 
 function vimeoLink(href) {
@@ -178,6 +196,7 @@ function columnList(columnBlocks) {
 export {
   textType,
   titleBlock,
+  richText,
   heading2Block,
   heading3Block,
   paragraphBlock,

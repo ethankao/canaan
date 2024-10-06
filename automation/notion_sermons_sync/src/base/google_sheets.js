@@ -7,7 +7,6 @@ import { filePath, readFileAsJson, writeJsonToFile } from './fs_utils.js';
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 const TOKEN_FILE = 'token.json';
 const CREDENTIALS_FILE = 'credentials.json';
-const LAST_COL = 'J';
 
 /**
  * Reads previously authorized credentials from the save file.
@@ -73,7 +72,7 @@ async function fetchSundaySchoolSheetRecords(auth, spreadsheetId, tab) {
   const sheets = google.sheets({ version: 'v4', auth });
   const res = await sheets.spreadsheets.values.get({
     spreadsheetId,
-    range: `${tab}!A1:${LAST_COL}` // skip header
+    range: `${tab}!A1:R` // skip header
   });
   const rows = res.data.values;
   if (!rows || rows.length === 0) {
@@ -101,11 +100,11 @@ async function fetchSundaySchoolSheetRecords(auth, spreadsheetId, tab) {
 //    rowIndex: 2
 //  }
 //
-async function fetchSheetRecords(auth, spreadsheetId, tab) {
+async function fetchSheetRecords(auth, spreadsheetId, tab, lastCol = 'R') {
   const sheets = google.sheets({ version: 'v4', auth });
   const res = await sheets.spreadsheets.values.get({
     spreadsheetId,
-    range: `${tab}!A1:${LAST_COL}` // skip header
+    range: `${tab}!A1:${lastCol}` // skip header
   });
   const rows = res.data.values;
   if (!rows || rows.length === 0) {
@@ -125,7 +124,7 @@ async function markRecordIsImported(auth, spreadsheetId, tab, index, lastCol, pa
   const values = [ [ pageId || 1 ] ];
   const resource = { values };
 
-  const lastPos = `${lastCol || LAST_COL}${index}`;
+  const lastPos = `${lastCol || 'R'}${index}`;
   const range = `${tab}!${lastPos}:${lastPos}`;
   const params = {
     spreadsheetId,

@@ -2,7 +2,7 @@ import gWorker from '../base/google_sheets.js';
 import nWorker from '../base/notion.js';
 import { sleep }  from '../base/utils.js';
 
-const config = {
+const defaultConfig = {
   sheet: '1wS5R_yxItbRPVkO2BL0vOwxAq1T9PXnIzOikJTJGvmU',
   tabName: '2024',
   importedField: 'L',
@@ -12,7 +12,8 @@ const config = {
 };
 
 /// Sermon
-async function syncSermons() {
+async function syncSermons(options = {}) {
+  const config = { ...defaultConfig, ...options };
   try {
     const auth = await gWorker.authorize();
     const records = await gWorker.fetchSheetRecords(auth, config.sheet, config.tabName, 'L');

@@ -1,7 +1,8 @@
 import gWorker from '../base/google_sheets.js';
 import nWorker from '../base/notion.js';
+import { sleep }  from '../base/utils.js';
 
-const config = {
+const defaultConfig = {
   sheet: '1QoN8CKFdt9PnMLlowUw3nOVUvmeEGSNeg_z1GzoG3_0',
   tabName: 'Public',
   importedField: 'H',
@@ -9,17 +10,16 @@ const config = {
   // database: '15b72557477e4c8c85de1b8566c89770' // test
 }
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
-
-/// Video
-(async () => {
+async function syncVideos(options = {}) {
+  const config = { ...defaultConfig, ...options };
   try {
     const auth = await gWorker.authorize();
     const records = await gWorker.fetchSheetRecords(auth, config.sheet, config.tabName);
 
-    if (records.length == 0) { return; }
+    if (records.length == 0) {
+      console.log('No New Records');
+      return;
+    }
 
     const notion = await nWorker.createNotionClient();
 
@@ -37,4 +37,6 @@ function sleep(ms) {
   } catch(error) {
     console.error(error);
   }
-})();
+}
+
+export { syncVideos }

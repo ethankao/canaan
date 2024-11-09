@@ -1,5 +1,6 @@
 import gWorker from '../base/google_sheets.js';
 import nWorker from '../base/notion.js';
+import { sleep }  from '../base/utils.js';
 
 const sundaySchoolConfigs = [
   { // 2024 Q1 約書亞記
@@ -22,11 +23,7 @@ const sundaySchoolConfigs = [
   },
 ];
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
-
-(async () => {
+async function syncSundaySchools() {
   const auth = await gWorker.authorize();
   const notion = await nWorker.createNotionClient();
   for (const config of sundaySchoolConfigs) {
@@ -66,4 +63,6 @@ function sleep(ms) {
       console.error(error);
     }
   }
-})();
+}
+
+export { syncSundaySchools }

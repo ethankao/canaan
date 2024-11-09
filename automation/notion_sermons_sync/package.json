@@ -17,8 +17,12 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "test schools": "npx @google-cloud/functions-framework --target=syncSundaySchools",
     "test sermons": "npx @google-cloud/functions-framework --target=syncSermons",
-    "deploy sermons": "gcloud functions deploy sermons_sync --gen2 --runtime=nodejs20 --region=us-west1 --source=.  --entry-point=syncSermons --trigger-http"
+    "test videos": "npx @google-cloud/functions-framework --target=syncVideos",
+    "deploy schools": "gcloud functions deploy schools_sync --gen2 --runtime=nodejs20 --region=us-west1 --source=.  --entry-point=syncSundaySchools --trigger-http",
+    "deploy sermons": "gcloud functions deploy sermons_sync --gen2 --runtime=nodejs20 --region=us-west1 --source=.  --entry-point=syncSermons --trigger-http",
+    "deploy videos": "gcloud functions deploy videos_sync --gen2 --runtime=nodejs20 --region=us-west1 --source=.  --entry-point=syncVideos --trigger-http"
   },
   "author": "",
   "license": "ISC"

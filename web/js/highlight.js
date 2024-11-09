@@ -7,6 +7,8 @@
     '/en': 1,
     '/ministries/youth-ministry': 1,
     '/ministries/mandarin-ministry': 1,
+    '/ministries/family-ministry': 1,
+    '/en/ministries/family-ministry': 1,
     'srcdoc': 1
   }
 

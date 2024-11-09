@@ -95,7 +95,8 @@
         {
           en: 'Family Ministry',
           zh: '家庭事工',
-          enLink: '/ministries/family-ministry',
+          enLink: '/en/ministries/family-ministry',
+          zhLink: '/ministries/family-ministry',
         },
       ]
     },

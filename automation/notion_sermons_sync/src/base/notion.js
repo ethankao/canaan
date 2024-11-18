@@ -354,7 +354,7 @@ async function updateAlumb(notion, album, pageId) {
     }
   });
 
-  console.log(`Updating album ${title} Done. ${response.id}`);
+  console.log(`Updating album ${title} Done. ${album.mediaItems?.length} ${response.id}`);
 }
 
 function chunkString(str, chunkSize) {

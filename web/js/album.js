@@ -1,7 +1,7 @@
 'use strict';
 (() => {
   const allowedPaths = {
-    '/zh/events-testing': 1,
+    '/photos-testing': 1,
     'srcdoc': 1
   };
 
@@ -23,6 +23,19 @@
   function bootstrap() {
     if (!allowedPaths[window.location.pathname]) { return; }
 
+    (function(history) {
+      var _pushState = history.pushState;
+      history.pushState = function() {
+        const ret = _pushState.apply(history, arguments);
+        setupAlbums()
+        return ret;
+      };
+    })(window.history);
+
+    setupAlbums()
+  }
+
+  function setupAlbums() {
     targets.forEach(async n => {
       try {
         await setupAlbum(n);
@@ -48,6 +61,8 @@
         prevEl: '.swiper-button-prev',
       },
     });
+
+    if (typeof PhotoSwipeLightbox === 'undefined') { return; }
 
     const lightbox = new PhotoSwipeLightbox({
       gallery: `#${target}`,

@@ -34,7 +34,7 @@ function itemHtml(item) {
        data-pswp-width="${width}" data-pswp-height="${height}"
        class="swiper-slide"
        target="_blank">
-      <img src="${item.baseUrl}" class="mx-auto h-full" />
+      <img src="${item.baseUrl}" class="mx-auto object-contain h-full" />
     </a>`;
   } else {
     return `\
@@ -42,7 +42,7 @@ function itemHtml(item) {
        class="swiper-slide"
        data-media-id="${item.id}"
        data-pswp-width="${width}" data-pswp-height="${height}">
-      <img src="${item.baseUrl}" class="mx-auto h-full" />
+      <img src="${item.baseUrl}" class="mx-auto object-contain h-full" />
     </a>`;
   }
 }

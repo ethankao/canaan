@@ -1,7 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './js/**/*.js'
+    './js/**/*.js',
+    '../automation/notion_sermons_sync/src/base/gallery.js'
   ],
   theme: {
     extend: {

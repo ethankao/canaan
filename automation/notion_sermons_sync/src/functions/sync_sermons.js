@@ -1,3 +1,4 @@
+import gBase from '../base/google_base.js';
 import gWorker from '../base/google_sheets.js';
 import nWorker from '../base/notion.js';
 import { sleep }  from '../base/utils.js';
@@ -15,7 +16,7 @@ const defaultConfig = {
 async function syncSermons(options = {}) {
   const config = { ...defaultConfig, ...options };
   try {
-    const auth = await gWorker.authorize();
+    const auth = await gBase.authorize();
     const records = await gWorker.fetchSheetRecords(auth, config.sheet, config.tabName, 'L');
 
     if (records.length == 0) {

@@ -1,3 +1,4 @@
+import gBase from '../base/google_base.js';
 import gWorker from '../base/google_sheets.js';
 import nWorker from '../base/notion.js';
 import { sleep }  from '../base/utils.js';
@@ -24,7 +25,7 @@ const sundaySchoolConfigs = [
 ];
 
 async function syncSundaySchools() {
-  const auth = await gWorker.authorize();
+  const auth = await gBase.authorize();
   const notion = await nWorker.createNotionClient();
   for (const config of sundaySchoolConfigs) {
     try {

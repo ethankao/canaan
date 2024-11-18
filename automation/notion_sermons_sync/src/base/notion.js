@@ -1,6 +1,7 @@
 import { Client } from '@notionhq/client';
 
 import { readFileAsJson } from './fs_utils.js';
+import { galleryHtml } from './gallery.js';
 import { sleep } from './utils.js';
 
 import {
@@ -314,11 +315,62 @@ async function createSundaySchoolRecord(notion, database_id, record, isEnglish) 
   return res.id;
 }
 
+async function updateAlumb(notion, album, pageId) {
+  const title = album.album?.title;
+  console.log(`Updating album ${title}`);
+
+  // find the first column_list
+  const blocks = await notion.blocks.children.list({
+    block_id: pageId,
+    page_size: 30,
+  });
+
+  // find the target section
+  const target = blocks?.results?.find(r => {
+    return r.type === 'code' && r.code?.rich_text?.[0]?.plain_text?.includes(title);
+  });
+
+  if (!target) {
+    console.error(`Not able to find album section for ${title}`);
+    return;
+  }
+
+  const html = galleryHtml(album);
+
+  await sleep(350);
+
+  const newText = `super-embed:  <!-- ${title} -->\n${html}`;
+  const chunks = chunkString(newText, 2000);
+  const rich_text = chunks.map(n => {
+    return {
+      text: { content: `${n}` }
+    }
+  })
+
+  const response = await notion.blocks.update({
+    block_id: target.id,
+    code: {
+      rich_text
+    }
+  });
+
+  console.log(`Updating album ${title} Done. ${response.id}`);
+}
+
+function chunkString(str, chunkSize) {
+  const chunks = [];
+  for (let i = 0; i < str.length; i += chunkSize) {
+    chunks.push(str.slice(i, i + chunkSize));
+  }
+  return chunks;
+}
+
 export default {
   createNotionClient,
   createVideoTestimonyRecord,
   createSermonRecord,
-  updateSermonHighlight,
+  createSundaySchoolRecord,
+  updateAlumb,
   updateMMPage,
-  createSundaySchoolRecord
+  updateSermonHighlight,
 };

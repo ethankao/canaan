@@ -5,7 +5,10 @@ import { filePath, readFileAsJson, writeJsonToFile } from './fs_utils.js';
 // If modifying these scopes, delete token.json.
 const SCOPES = [
   'https://www.googleapis.com/auth/spreadsheets',
-  'https://www.googleapis.com/auth/photoslibrary.readonly'
+  'https://www.googleapis.com/auth/drive.metadata.readonly',
+  'https://www.googleapis.com/auth/drive.readonly',
+  'https://www.googleapis.com/auth/drive.photos.readonly',
+  // 'https://www.googleapis.com/auth/photoslibrary.readonly'
 ];
 const TOKEN_FILE = 'token.json';
 const CREDENTIALS_FILE = 'credentials.json';

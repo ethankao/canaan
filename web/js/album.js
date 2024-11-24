@@ -1,7 +1,7 @@
 'use strict';
 (() => {
   const allowedPaths = {
-    '/photos-testing': 1,
+    '/photos': 1,
     'srcdoc': 1
   };
 

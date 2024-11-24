@@ -316,7 +316,7 @@ async function createSundaySchoolRecord(notion, database_id, record, isEnglish) 
 }
 
 async function updateAlumb(notion, album, pageId) {
-  const title = album.album?.title;
+  const title = album.album.albumTitle;
   console.log(`Updating album ${title}`);
 
   // find the first column_list
@@ -354,7 +354,7 @@ async function updateAlumb(notion, album, pageId) {
     }
   });
 
-  console.log(`Updating album ${title} Done. ${album.mediaItems?.length} ${response.id}`);
+  console.log(`Updating album ${title} Done. ${album.items?.length} ${response.id}`);
 }
 
 function chunkString(str, chunkSize) {

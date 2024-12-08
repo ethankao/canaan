@@ -1,6 +1,6 @@
 .navbar {
     max-width: var(--layout-max-width);
-    width: calc(100% - var(--column-spacing));
+    width: calc(100% - 48px);
     align-self: center;
 }
 

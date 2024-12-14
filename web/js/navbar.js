@@ -6,8 +6,24 @@
     {
       en: 'About Us',
       zh: '關於我們',
-      enLink: '/en/about-us',
-      zhLink: '/about-us'
+      items: [
+        {
+          en: 'Our Story',
+          zh: '我們的故事',
+          enLink: '/en/about-us/our-story',
+          zhLink: '/about-us/our-story'
+        },
+        {
+          en: 'Mission Support',
+          zh: '宣教支持',
+          enLink: '/about-us/mission-support'
+        },
+        {
+          en: 'Careers',
+          zh: '徵人啟事',
+          enLink: '/about-us/careers'
+        }
+      ]
     },
     {
       en: 'Gatherings',

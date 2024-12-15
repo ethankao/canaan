@@ -335,11 +335,31 @@ async function updateAlumb(notion, album, pageId) {
     return;
   }
 
+  const content = target.code?.rich_text[0]?.text?.content || '';
+  const reg = /%%(.*)%%(.*)%%(.*)%%/.exec(content);
+  const pageLastItemName = reg?.[1] || '_NO';
+  const pageLastItemTime = reg?.[2] || '_NO';
+  const pageLastItemCount = reg?.[3] || '_NO';
+
+  const items = album.items || [];
+  const lastItem = items[items.length - 1];
+  const lastItemName = lastItem?.id || 'NA';
+  const lastItemTime = lastItem?.imageMediaMetadata?.time || 'NA';
+  const lastItemCount = `${items.length}`;
+
+  if (pageLastItemName === lastItemName &&
+    pageLastItemTime === lastItemTime &&
+    pageLastItemCount === lastItemCount) {
+    console.error(`${title} has no new photos ${lastItemCount}. skipped.`);
+    return;
+  }
+
   const html = galleryHtml(album);
+  const itemLine = `<!-- %%${lastItemName}%%${lastItemTime}%%${lastItemCount}%% -->`;
 
   await sleep(350);
 
-  const newText = `super-embed:  <!-- ${title} -->\n${html}`;
+  const newText = `super-embed:  <!-- ${title} -->\n${itemLine}\n${html}`;
   const chunks = chunkString(newText, 2000);
   const rich_text = chunks.map(n => {
     return {

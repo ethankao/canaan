@@ -2,6 +2,7 @@ import functions from '@google-cloud/functions-framework';
 import { syncSermons } from './src/functions/sync_sermons.js';
 import { syncSundaySchools } from './src/functions/sync_sunday_school.js';
 import { syncVideos } from './src/functions/sync_videos.js';
+import { syncPhotos } from './src/functions/sync_photos.js';
 import { parseJwt } from './src/base/utils.js';
 
 
@@ -40,5 +41,16 @@ functions.http('syncVideos', async (req, res) => {
   } catch(error) {
     console.log(error);
     res.send('Sync Videos Failed.');
+  }
+});
+
+functions.http('syncPhotos', async (req, res) => {
+  logAuth(req, 'syncPhotos');
+  try {
+    await syncPhotos();
+    res.send('Sync Photos Done.');
+  } catch(error) {
+    console.log(error);
+    res.send('Sync Photos Failed.');
   }
 });

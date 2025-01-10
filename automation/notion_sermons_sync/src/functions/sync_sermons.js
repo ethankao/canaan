@@ -5,7 +5,7 @@ import { sleep }  from '../base/utils.js';
 
 const defaultConfig = {
   sheet: '1wS5R_yxItbRPVkO2BL0vOwxAq1T9PXnIzOikJTJGvmU',
-  tabName: '2024',
+  tabName: '2025',
   importedField: 'L',
   database: '5b3cd3c02a3b4b34890c19ce0a1492ce',
   // database: '223d59a574244c0b991871c3351bb714', // test

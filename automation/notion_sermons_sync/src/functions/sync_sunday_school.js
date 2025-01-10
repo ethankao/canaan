@@ -4,22 +4,40 @@ import nWorker from '../base/notion.js';
 import { sleep }  from '../base/utils.js';
 
 const sundaySchoolConfigs = [
-  { // 2024 Q1 約書亞記
+//  { // 2024 Q1 約書亞記
+//    sheet: '1MBCCmEcH1Or-xb6cQxdJSZIMvNxcY1yxsj44CYkn8k8',
+//    tab: '2024 Q1 約書亞記',
+//    notionPage: '6c2ea71bcbbd418abdf9511875de40ad',
+//    importedField: 'H'
+//  },
+//  { // 舊約聖經人物
+//    sheet: '1MBCCmEcH1Or-xb6cQxdJSZIMvNxcY1yxsj44CYkn8k8',
+//    tab: '2024 Q4 舊約聖經人物',
+//    notionPage: '7246406bc3db431f8d412e87e5dde435',
+//    importedField: 'H'
+//  },
+//  { // 基督徒生活造就
+//    sheet: '1MBCCmEcH1Or-xb6cQxdJSZIMvNxcY1yxsj44CYkn8k8',
+//    tab: '2024 Q4 基督徒生活造就',
+//    notionPage: '0f82d566bb7449c4a2ad210574a3f97f',
+//    importedField: 'H'
+//  },
+  { // 聖經人物
     sheet: '1MBCCmEcH1Or-xb6cQxdJSZIMvNxcY1yxsj44CYkn8k8',
-    tab: '2024 Q1 約書亞記',
-    notionPage: '6c2ea71bcbbd418abdf9511875de40ad',
+    tab: '2025Q1 慕道班-聖經人物',
+    notionPage: 'ac83c938aee4416cb3b61b1c2f709b07',
     importedField: 'H'
   },
-  { // 舊約聖經人物
+  { // 登山寶訓
     sheet: '1MBCCmEcH1Or-xb6cQxdJSZIMvNxcY1yxsj44CYkn8k8',
-    tab: '2024 Q4 舊約聖經人物',
-    notionPage: '7246406bc3db431f8d412e87e5dde435',
+    tab: '2025Q1 信徒班-登山寶訓',
+    notionPage: '2256f869672640509fde648116bd5b7d',
     importedField: 'H'
   },
-  { // 基督徒生活造就
+  { // 以弗所書
     sheet: '1MBCCmEcH1Or-xb6cQxdJSZIMvNxcY1yxsj44CYkn8k8',
-    tab: '2024 Q4 基督徒生活造就',
-    notionPage: '0f82d566bb7449c4a2ad210574a3f97f',
+    tab: '2025Q1 信徒班-以弗所書',
+    notionPage: 'fd7555a59b21416b9e93d34ec9a5bae5',
     importedField: 'H'
   },
 ];

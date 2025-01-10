@@ -12,10 +12,11 @@ function logAuth(req, name) {
 }
 
 functions.http('syncSermons', async (req, res) => {
-  logAuth(req, 'syncSermons');
+  logAuth(req, `syncSermons ${req.body}`);
   try {
-    await syncSermons();
-    res.send('Sync Sermons Done.');
+    await syncSermons(req.body);
+    const tabName = req.body?.tabName || '';
+    res.send(`Sync Sermons Done. ${tabName}`);
   } catch(error) {
     console.log(error);
     res.send('Sync Sermons Failed');

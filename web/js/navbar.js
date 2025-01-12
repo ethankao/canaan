@@ -22,6 +22,12 @@
           en: 'Careers',
           zh: '徵人啟事',
           enLink: '/about-us/careers'
+        },
+        {
+          en: 'Resources',
+          zh: '教會資源',
+          ehLink: '/about-us/resources',
+          zhLink: '/en/about-us/resources'
         }
       ]
     },

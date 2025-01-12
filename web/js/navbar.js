@@ -26,7 +26,7 @@
       ]
     },
     {
-      en: 'Gatherings',
+      en: 'Worship Services',
       zh: '聚會與敬拜',
       items: [
         {

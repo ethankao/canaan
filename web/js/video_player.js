@@ -7,7 +7,17 @@
     '/en/gatherings/sermons',
     '/growth/videos',
     'srcdoc'
-];
+  ];
+
+  const visibilityObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry) { return; }
+
+      if (entry.intersectionRatio > 0 && entry.target) {
+        createVideoPlayer(entry.target);
+      }
+    });
+  });
 
   // DOM observation
 
@@ -64,6 +74,29 @@
     return `https://www.youtube.com/embed/${v}`
   }
 
+  function playerData(card) {
+    if (!card) { return {}; }
+
+    const image = card.getElementsByTagName('img')[0];
+    const prop = card.getElementsByClassName('notion-property__url')[0]
+
+    if (!image || !prop) { return { image }; }
+
+    const link = prop.getElementsByTagName('a')[0];
+    if (!link) { return { image }; }
+
+    const href = link.getAttribute('href') || '';
+
+    let url;
+    if (/vimeo/i.test(href)) {
+      url = vimeoHref(href);
+    } else if (/youtu/i.test(href)) {
+      url = youtubeHref(href);
+    }
+
+    return { image, url }
+  }
+
   function updatePlayer() {
     const allowed = allowedPrefix.some((prefix) => window.location.pathname.startsWith(prefix));
     if (!allowed) { return; }
@@ -74,34 +107,32 @@
     if (cards.length === 0) { return; }
 
     cards.forEach((card) => {
-      const image = card.getElementsByTagName('img')[0];
-      const prop = card.getElementsByClassName('notion-property__url')[0]
+      const data = playerData(card);
+      if (!data.image || !data.url) { return; }
 
-      if (!image || !prop) { return; }
+      if (data.image.getAttribute('_obs') != null) { return; }
 
-      const link = prop.getElementsByTagName('a')[0];
-      if (!link) { return; }
+      data.image.setAttribute('_obs', '1');
 
-      const href = link.getAttribute('href') || '';
+      visibilityObserver.observe(card);
+    });
+  }
 
-      let url;
-      if (/vimeo/i.test(href)) {
-        url = vimeoHref(href);
-      } else if (/youtu/i.test(href)) {
-        url = youtubeHref(href);
-      }
+  function createVideoPlayer(card) {
+    const { image, url } = playerData(card);
+    if (!image || !url) { return; }
 
-      if (!url) { return; }
 
-      const iframe = document.createElement('iframe');
-      iframe.setAttribute('src', url);
-      iframe.setAttribute('frameborder', '0');
-      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
-      iframe.setAttribute('allowfullscreen', '1');
-      iframe.className = `${image.className} player`;
+    const iframe = document.createElement('iframe');
+    iframe.setAttribute('src', url);
+    iframe.setAttribute('frameborder', '0');
+    iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+    iframe.setAttribute('allowfullscreen', '1');
+    iframe.className = `${image.className} player`;
 
-      image.replaceWith(iframe);
-    })
+    image.replaceWith(iframe);
+
+    visibilityObserver.unobserve(card);
   }
 
 })();

@@ -80,11 +80,6 @@
               en: 'Announcements',
               zh: '最新公告',
               enLink: '/ministries/english-ministry/announcements',
-            },
-            {
-              en: 'Fellowships',
-              zh: '團契生活',
-              enLink: '/en/fellowships/en',
             }
           ]
         },

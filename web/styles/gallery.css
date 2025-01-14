@@ -38,6 +38,10 @@
   margin-bottom: 0.5em;
 }
 
+.notion-collection-gallery .notion-property__title {
+    text-align: start;
+}
+
 .notion-collection-gallery .notion-property__number {
   position: absolute!important;
    align-items: left !important;

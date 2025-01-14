@@ -26,8 +26,8 @@
         {
           en: 'Resources',
           zh: '教會資源',
-          ehLink: '/about-us/resources',
-          zhLink: '/en/about-us/resources'
+          enLink: '/en/about-us/resources',
+          zhLink: '/about-us/resources'
         }
       ]
     },

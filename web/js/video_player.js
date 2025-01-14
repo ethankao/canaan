@@ -107,14 +107,18 @@
     if (cards.length === 0) { return; }
 
     cards.forEach((card) => {
-      const data = playerData(card);
-      if (!data.image || !data.url) { return; }
+      const { image, url } = playerData(card);
 
-      if (data.image.getAttribute('_obs') != null) { return; }
+      if (!image) { return; }
 
-      data.image.setAttribute('_obs', '1');
+      if (image.getAttribute('_obs') != null) { return; }
 
-      visibilityObserver.observe(card);
+      image.setAttribute('_obs', '1');
+      image.className = `${image.className} player`
+
+      if (url) {
+        visibilityObserver.observe(card);
+      }
     });
   }
 

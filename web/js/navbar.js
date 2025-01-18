@@ -261,7 +261,7 @@
       <li>
       <div class="dropdown dropdown-bottom dropdown-hover">
       <div tabindex="0">${item.text}</div>
-      <ul class="menu dropdown-content p-2 z-[12] shadow bg-base-100 rounded-box min-w-32 max-2-80 w-max">
+      <ul tabindex="0" class="menu dropdown-content p-2 z-[12] shadow bg-base-100 rounded-box min-w-32 max-2-80 w-max">
   ${itemsTag}
       </ul>
       </div>

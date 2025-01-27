@@ -90,7 +90,7 @@
 
 .notion-collection-gallery.highlight .notion-collection-card img {
   display: block;
-  height: 30em;
+  height: auto;
   width: auto;
   margin-left: auto;
   margin-right: auto;

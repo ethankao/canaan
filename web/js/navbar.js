@@ -136,11 +136,6 @@
           en: 'Testimony (Video)',
           zh: '見證分享 (影音)',
           enLink: '/growth/videos'
-        },
-        {
-          en: 'Event Highlights',
-          zh: '活動花絮',
-          enLink: '/photos'
         }
       ]
     },
@@ -166,6 +161,11 @@
           zh: '英語團契',
           enLink: '/en/fellowships/en',
           enOrder: 0,
+        },
+        {
+          en: 'Event Highlights',
+          zh: '活動花絮',
+          enLink: '/photos'
         }
       ]
     },

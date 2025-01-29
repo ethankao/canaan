@@ -6,6 +6,7 @@
     '/sermons',
     '/en/gatherings/sermons',
     '/growth/videos',
+    '/fellowships/mm/nfl/nfl-videos',
     'srcdoc'
   ];
 
